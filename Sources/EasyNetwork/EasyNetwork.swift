@@ -1,6 +1,16 @@
-public struct EasyNetwork {
-    public private(set) var text = "Hello, World!"
+ //
+//  EasyNetwork.swift
+//  EasyNetwork
+//
+//  Created by Dmytro Lehkyi on 29.05.2023.
+//
 
-    public init() {
-    }
+import Foundation
+
+public struct EasyNetwork {
+	static var baseURL: URL!
+	
+	public static func setBaseURL(_ url: URL) {
+		Self.baseURL = url
+	}
 }
