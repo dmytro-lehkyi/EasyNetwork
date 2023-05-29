@@ -12,7 +12,7 @@ public protocol HTTPClient {
 	func data(for endpoint: Endpoint, completion: @escaping (Result<Data, Error>) -> Void)
 }
 
-extension HTTPClient {
+public extension HTTPClient {
 	func load<T: Decodable>(_ endpoint: Endpoint, responseType: T.Type = T.self) async throws -> T {
 		let data = try await self.data(for: endpoint)
 		return try JSONDecoder().decode(responseType, from: data)
