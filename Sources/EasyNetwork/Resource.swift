@@ -10,7 +10,7 @@ import Foundation
 public struct Resource<T: Decodable> {
 	let endpoint: Endpoint
 
-	init(endpoint: Endpoint) {
+	public init(endpoint: Endpoint) {
 		self.endpoint = endpoint
 	}
 }
