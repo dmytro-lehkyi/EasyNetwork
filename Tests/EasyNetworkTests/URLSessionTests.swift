@@ -28,10 +28,11 @@ class URLSessionTests: XCTestCase {
 		let sut = makeSUT()
 		MockedURLProtocol.mockResponse(data: Books.json.data(using: .utf8)!, statusCode: 200, for: kMockedURL)
 		let endpoint = Endpoint(baseURL: kBaseURL, path: kPath)
+		let resourse = Resource<[Book]>(endpoint: endpoint)
 		
 		let expectation = self.expectation(description: "Stubbed network call")
 
-		sut.load(endpoint, responseType: [Book].self) { result in
+		sut.load(resourse) { result in
 			switch result {
 			case .success(let books):
 				XCTAssertEqual(books, Books.expected)
@@ -48,10 +49,11 @@ class URLSessionTests: XCTestCase {
 		let sut = makeSUT()
 		MockedURLProtocol.mockResponse(data: Books.json.data(using: .utf8)!, statusCode: 500, for: kMockedURL)
 		let endpoint = Endpoint(baseURL: kBaseURL, path: kPath)
+		let resourse = Resource<[Book]>(endpoint: endpoint)
 		
 		let expectation = self.expectation(description: "Stubbed network call")
 
-		sut.load(endpoint, responseType: [Book].self) { result in
+		sut.load(resourse) { result in
 			switch result {
 			case .success:
 				XCTFail("Expected to return error. Returned success")

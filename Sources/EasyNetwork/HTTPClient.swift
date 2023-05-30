@@ -13,19 +13,18 @@ public protocol HTTPClient {
 }
 
 public extension HTTPClient {
-	func load<T: Decodable>(_ endpoint: Endpoint, responseType: T.Type = T.self) async throws -> T {
-		let data = try await self.data(for: endpoint)
-		return try JSONDecoder().decode(responseType, from: data)
+	func load<T: Decodable>(_ resourse: Resource<T>) async throws -> T {
+		let data = try await self.data(for: resourse.endpoint)
+		return try JSONDecoder().decode(T.self, from: data)
 	}
 	
-	func load<T: Decodable>(_ endpoint: Endpoint,
-							responseType: T.Type = T.self,
+	func load<T: Decodable>(_ resourse: Resource<T>,
 							completion: @escaping (Result<T, Error>) -> Void) {
-		self.data(for: endpoint) { result in
+		self.data(for: resourse.endpoint) { result in
 			switch result {
 			case .success(let data):
 				do {
-					completion(.success(try JSONDecoder().decode(responseType, from: data)))
+					completion(.success(try JSONDecoder().decode(T.self, from: data)))
 				} catch {
 					completion(.failure(error))
 				}
